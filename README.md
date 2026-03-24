@@ -2,6 +2,8 @@
 
 Paper Web Console is a PaperMC plugin that exposes the Minecraft server console in a browser on a dedicated HTTP port.
 
+<img width="1920" height="874" alt="image" src="https://github.com/user-attachments/assets/989394fc-480d-4bfd-963b-69a93466340a" />
+
 It is intentionally narrow:
 
 - stream recent and live console output from `logs/latest.log`
