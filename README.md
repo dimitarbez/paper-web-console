@@ -102,13 +102,13 @@ export PATH="$JAVA_HOME/bin:$PATH"
 On successful startup the plugin logs a line like:
 
 ```text
-[PaperWebConsole] Web console listening on http://127.0.0.1:28765
+[PaperWebConsole] Web console listening on http://0.0.0.0:28765
 ```
 
 On first run it also logs a setup URL like:
 
 ```text
-http://127.0.0.1:28765/setup?token=...
+http://0.0.0.0:28765/setup?token=...
 ```
 
 Open that URL once to create the shared admin password.
@@ -118,13 +118,14 @@ Open that URL once to create the shared admin password.
 By default the web server binds to:
 
 ```text
-127.0.0.1:28765
+0.0.0.0:28765
 ```
 
 That means:
 
-- `http://127.0.0.1:28765` works on the Minecraft server machine itself
-- it does not work from another device unless you change the bind address
+- the web server listens on all network interfaces on port `28765`
+- you can reach it from the server machine with `http://127.0.0.1:28765`
+- other LAN devices can use the server's LAN IP unless a firewall blocks the port
 
 If you want LAN access, edit the generated server config at:
 
@@ -146,7 +147,7 @@ Then restart the server and allow the port through any local firewall.
 This plugin is intentionally conservative, but it is not designed to be internet-safe.
 
 - HTTP only by design
-- default bind address is `127.0.0.1`
+- default bind address is `0.0.0.0`
 - single shared admin password
 - password hash only, never plaintext
 - setup uses a one-time token with expiration

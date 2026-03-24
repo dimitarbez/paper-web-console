@@ -13,7 +13,7 @@ public record PluginConfiguration(
     UiConfiguration ui
 ) {
     public static PluginConfiguration from(FileConfiguration fileConfiguration) {
-        String bindAddress = requireText(fileConfiguration.getString("bindAddress", "127.0.0.1"), "bindAddress");
+        String bindAddress = requireText(fileConfiguration.getString("bindAddress", "0.0.0.0"), "bindAddress");
         int port = requireRange(fileConfiguration.getInt("port", 28765), 1, 65535, "port");
         int historyLimit = requireRange(fileConfiguration.getInt("historyLimit", 250), 25, 10_000, "historyLimit");
         int sessionHours = requireRange(fileConfiguration.getInt("sessionHours", 12), 1, 168, "sessionHours");

@@ -1,6 +1,6 @@
-# Bind to localhost by default. Change to a LAN IP or 0.0.0.0 only if you
-# understand that this plugin is HTTP-only and should remain on a trusted network.
-bindAddress: "127.0.0.1"
+# Bind to all interfaces by default. Restrict this to a specific LAN IP if you
+# want to reduce exposure. This plugin is HTTP-only and should remain on a trusted network.
+bindAddress: "0.0.0.0"
 port: 28765
 
 # Number of lines to preload from logs/latest.log when the plugin starts.

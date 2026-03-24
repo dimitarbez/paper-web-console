@@ -100,7 +100,7 @@ That main-thread handoff is important. Do not call Bukkit command execution from
 The current security posture is intentionally conservative but scoped to a trusted network.
 
 - HTTP only by design. Do not present this as internet-safe.
-- Default bind address must stay `127.0.0.1` unless the admin opts into broader exposure.
+- Default bind address is `0.0.0.0`. Treat this as LAN-first only and do not present it as internet-safe.
 - Single shared admin password for v1.
 - Store only a salted PBKDF2-derived password hash, never plaintext.
 - First-run setup uses a one-time setup token printed to the Minecraft console.
