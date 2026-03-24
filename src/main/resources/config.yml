@@ -1,0 +1,18 @@
+# Bind to localhost by default. Change to a LAN IP or 0.0.0.0 only if you
+# understand that this plugin is HTTP-only and should remain on a trusted network.
+bindAddress: "127.0.0.1"
+port: 28765
+
+# Number of lines to preload from logs/latest.log when the plugin starts.
+historyLimit: 250
+
+# Session and setup timing controls.
+sessionHours: 12
+setupTokenTtlMinutes: 30
+loginRateLimitWindowMinutes: 15
+loginRateLimitMaxAttempts: 5
+
+ui:
+  showTimestamps: true
+  maxBufferedLines: 2000
+  defaultWrapMode: true

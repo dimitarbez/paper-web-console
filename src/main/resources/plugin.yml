@@ -1,0 +1,17 @@
+name: PaperWebConsole
+version: ${version}
+main: dev.dimo.paperwebconsole.WebConsolePlugin
+api-version: "1.21"
+author: Dimo
+description: Browser-based Paper console with a modern CLI-style web UI.
+
+commands:
+  webconsole:
+    description: Manage the embedded web console
+    usage: /webconsole <status|reload|reset-auth>
+    permission: webconsole.admin
+
+permissions:
+  webconsole.admin:
+    description: Allows management of the web console plugin
+    default: op
