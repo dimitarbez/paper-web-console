@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Paper Web Console Setup</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body class="page auth-page">
+    <main class="auth-shell">
+        <section class="auth-copy">
+            <p class="eyebrow">First Run</p>
+            <h1>Finish setup from the URL printed in the Minecraft console.</h1>
+            <p>Create the shared admin password once. The setup token expires automatically and is only intended for trusted LAN use.</p>
+        </section>
+
+        <section class="auth-card">
+            <div class="auth-card-header">
+                <p class="eyebrow">Setup</p>
+                <h2>Create Admin Password</h2>
+            </div>
+            <form id="setupForm" class="auth-form">
+                <label class="field">
+                    <span>Setup Token</span>
+                    <input id="tokenInput" name="token" type="text" autocomplete="off" required>
+                </label>
+                <label class="field">
+                    <span>Password</span>
+                    <input id="passwordInput" name="password" type="password" autocomplete="new-password" minlength="12" required>
+                </label>
+                <button class="primary-button" type="submit">Complete Setup</button>
+            </form>
+            <p id="setupStatus" class="inline-status">Waiting for setup token…</p>
+        </section>
+    </main>
+
+    <div id="toastStack" class="toast-stack" aria-live="polite"></div>
+    <script type="module" src="/assets/setup.js"></script>
+</body>
+</html>

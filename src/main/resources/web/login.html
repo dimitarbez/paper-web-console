@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Paper Web Console Login</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body class="page auth-page">
+    <main class="auth-shell">
+        <section class="auth-copy">
+            <p class="eyebrow">Paper Web Console</p>
+            <h1>Minimal CLI shell, browser-native.</h1>
+            <p>Authenticate with the shared admin password to open the live Paper console.</p>
+        </section>
+
+        <section class="auth-card">
+            <div class="auth-card-header">
+                <p class="eyebrow">Login</p>
+                <h2>Open Console</h2>
+            </div>
+            <form id="loginForm" class="auth-form">
+                <label class="field">
+                    <span>Password</span>
+                    <input id="passwordInput" name="password" type="password" autocomplete="current-password" required>
+                </label>
+                <button class="primary-button" type="submit">Unlock</button>
+            </form>
+            <p id="loginStatus" class="inline-status">Checking server status…</p>
+        </section>
+    </main>
+
+    <div id="toastStack" class="toast-stack" aria-live="polite"></div>
+    <script type="module" src="/assets/login.js"></script>
+</body>
+</html>

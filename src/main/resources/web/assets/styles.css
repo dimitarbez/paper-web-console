@@ -1,0 +1,535 @@
+:root {
+    --bg: #141311;
+    --bg-elevated: #1b1917;
+    --bg-panel: #211f1c;
+    --bg-soft: #282520;
+    --bg-hover: #302c27;
+    --border: #332f29;
+    --border-strong: #464038;
+    --text: #f3efe7;
+    --text-soft: #d5cec2;
+    --text-muted: #9e9689;
+    --accent: #d8b183;
+    --accent-strong: #ffffff;
+    --success: #97c8a0;
+    --warning: #d7b380;
+    --danger: #de978a;
+    --shadow: none;
+    --radius-lg: 16px;
+    --radius-md: 12px;
+    --radius-sm: 8px;
+    --mono: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--mono);
+}
+
+.page {
+    min-height: 100vh;
+}
+
+body.console-page {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.eyebrow {
+    margin: 0 0 0.65rem;
+    color: var(--accent);
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.primary-button,
+.secondary-button,
+.mobile-panel-toggle {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--bg-soft);
+    color: var(--text);
+    font: inherit;
+    cursor: pointer;
+    transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
+}
+
+.primary-button:hover,
+.secondary-button:hover,
+.mobile-panel-toggle:hover {
+    border-color: rgba(216, 177, 131, 0.34);
+    background: var(--bg-hover);
+}
+
+.primary-button {
+    padding: 0.9rem 1.2rem;
+    background: #2b2620;
+    color: var(--accent-strong);
+}
+
+.secondary-button,
+.mobile-panel-toggle {
+    padding: 0.8rem 1rem;
+}
+
+.console-page {
+    padding: 1rem;
+}
+
+.app-shell {
+    width: min(1520px, 100%);
+    height: 100%;
+    margin: 0 auto;
+}
+
+.terminal-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 300px;
+    gap: 0;
+    align-items: stretch;
+    height: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--bg-elevated);
+    overflow: hidden;
+}
+
+.terminal-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
+    background: var(--bg-elevated);
+    overflow: hidden;
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    padding: 1rem 1.1rem 0.9rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-panel);
+}
+
+.terminal-header h1,
+.auth-copy h1,
+.auth-card h2 {
+    margin: 0;
+    font-size: clamp(1.1rem, 1.4vw, 1.4rem);
+    line-height: 1.1;
+    font-weight: 500;
+}
+
+.terminal-indicators {
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.55rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+    font-size: 0.75rem;
+    background: var(--bg-soft);
+}
+
+.badge-live {
+    border-color: rgba(151, 200, 160, 0.28);
+    color: var(--success);
+}
+
+.badge-muted {
+    color: var(--warning);
+}
+
+.console-output {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 0.35rem 0 0;
+    background: #151412;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+}
+
+.console-output.wrap-enabled .console-line-text {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.console-line {
+    display: grid;
+    grid-template-columns: auto auto 1fr auto;
+    gap: 0.75rem;
+    align-items: start;
+    padding: 0.38rem 1.1rem;
+    border-left: 2px solid transparent;
+    color: var(--text-soft);
+    animation: fade-in 160ms ease;
+}
+
+.console-line:hover {
+    background: rgba(255, 255, 255, 0.025);
+}
+
+.console-line-copy {
+    opacity: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    color: var(--text-muted);
+    cursor: pointer;
+    font: inherit;
+    text-transform: lowercase;
+}
+
+.console-line:hover .console-line-copy {
+    opacity: 1;
+}
+
+.console-line[data-source="log"] {
+    border-left-color: rgba(255, 255, 255, 0.045);
+}
+
+.console-line[data-source="command"] .console-line-level {
+    color: var(--accent);
+}
+
+.console-line[data-source="command"] {
+    border-left-color: rgba(216, 177, 131, 0.38);
+    background: rgba(216, 177, 131, 0.05);
+}
+
+.console-line[data-source="status"] .console-line-level {
+    color: var(--warning);
+}
+
+.console-line[data-source="status"] {
+    border-left-color: rgba(215, 179, 128, 0.28);
+}
+
+.console-line-timestamp,
+.console-line-level {
+    color: var(--text-muted);
+    white-space: nowrap;
+    font-size: 0.82rem;
+}
+
+.console-line-text {
+    white-space: pre;
+    min-width: 0;
+    line-height: 1.45;
+}
+
+.prompt-bar {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.9rem;
+    align-items: center;
+    padding: 0.85rem 1.1rem;
+    border-top: 1px solid var(--border);
+    background: var(--bg-panel);
+}
+
+.prompt-shell {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--accent);
+    font-size: 0.9rem;
+}
+
+.prompt-input,
+.field input {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: #171513;
+    color: var(--text);
+    font: inherit;
+    padding: 0.85rem 0.95rem;
+    resize: none;
+    outline: none;
+}
+
+.prompt-input:focus,
+.field input:focus {
+    border-color: rgba(216, 177, 131, 0.4);
+}
+
+.inline-status {
+    margin: 0;
+    padding: 0 1.1rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+.status-rail {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: sticky;
+    top: 1rem;
+    min-height: 0;
+    overflow: auto;
+    background: #181715;
+    border-left: 1px solid var(--border);
+    overscroll-behavior: contain;
+}
+
+.rail-card,
+.auth-card,
+.auth-copy {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--bg-elevated);
+    box-shadow: var(--shadow);
+}
+
+.rail-card {
+    padding: 1rem;
+    border: 0;
+    border-bottom: 1px solid var(--border);
+    border-radius: 0;
+    background: transparent;
+}
+
+.rail-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.rail-row:last-child {
+    border-bottom: 0;
+}
+
+.rail-label {
+    color: var(--text-muted);
+}
+
+.rail-value {
+    color: var(--text);
+    text-align: right;
+}
+
+.rail-actions {
+    display: grid;
+    gap: 0.55rem;
+}
+
+.console-output::-webkit-scrollbar,
+.status-rail::-webkit-scrollbar {
+    width: 10px;
+}
+
+.console-output::-webkit-scrollbar-thumb,
+.status-rail::-webkit-scrollbar-thumb {
+    background: #312c26;
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background-clip: padding-box;
+}
+
+.console-output::-webkit-scrollbar-track,
+.status-rail::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.rail-note p:last-child {
+    margin: 0;
+    color: var(--text-soft);
+    line-height: 1.6;
+    font-size: 0.92rem;
+}
+
+.auth-page {
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+}
+
+.auth-shell {
+    width: min(1120px, 100%);
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 440px);
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-elevated);
+}
+
+.auth-copy,
+.auth-card {
+    padding: 2rem;
+}
+
+.auth-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    border: 0;
+    border-right: 1px solid var(--border);
+    background: var(--bg-panel);
+}
+
+.auth-copy p:last-child {
+    margin-bottom: 0;
+    color: var(--text-soft);
+    line-height: 1.7;
+    max-width: 38ch;
+}
+
+.auth-card {
+    border: 0;
+    background: var(--bg-elevated);
+}
+
+.auth-card-header {
+    margin-bottom: 1.5rem;
+}
+
+.auth-form {
+    display: grid;
+    gap: 1rem;
+}
+
+.field {
+    display: grid;
+    gap: 0.55rem;
+    color: var(--text-soft);
+}
+
+.toast-stack {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    display: grid;
+    gap: 0.6rem;
+    z-index: 10;
+}
+
+.toast {
+    min-width: 220px;
+    max-width: 340px;
+    border: 1px solid var(--border-strong);
+    border-radius: 10px;
+    background: #202020;
+    color: var(--text);
+    padding: 0.85rem 1rem;
+}
+
+.toast[data-tone="error"] {
+    border-color: rgba(228, 154, 143, 0.32);
+    color: #ffd7d1;
+}
+
+.mobile-panel-toggle {
+    display: none;
+    margin: 0 0 1rem auto;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(3px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 1040px) {
+    .terminal-layout,
+    .auth-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .mobile-panel-toggle {
+        display: inline-flex;
+    }
+
+    .status-rail {
+        position: fixed;
+        inset: auto 1rem 1rem 1rem;
+        z-index: 9;
+        max-height: min(70vh, 36rem);
+        transform: translateY(calc(100% + 2rem));
+        transition: transform 180ms ease;
+        min-height: auto;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+    }
+
+    .app-shell[data-panel-open="true"] .status-rail {
+        transform: translateY(0);
+    }
+
+    .terminal-panel {
+        min-height: 0;
+    }
+
+    .auth-copy {
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
+    }
+}
+
+@media (max-width: 720px) {
+    .console-page,
+    .auth-page {
+        padding: 1rem;
+    }
+
+    body.console-page {
+        overflow: hidden;
+    }
+
+    .terminal-header,
+    .prompt-bar,
+    .auth-copy,
+    .auth-card {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .prompt-bar {
+        grid-template-columns: 1fr;
+    }
+
+    .console-line {
+        grid-template-columns: auto 1fr auto;
+    }
+
+    .console-line-level {
+        display: none;
+    }
+
+    .console-line {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
