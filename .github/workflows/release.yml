@@ -29,6 +29,9 @@ jobs:
           java-version: '21'
           cache: gradle
 
+      - name: Prepare Gradle wrapper
+        run: chmod +x ./gradlew
+
       - name: Determine release version
         id: version
         shell: bash
@@ -62,7 +65,7 @@ jobs:
 
       - name: Build shaded jar
         if: steps.version.outputs.already_released != 'true'
-        run: ./gradlew shadowJar -PreleaseVersion=${{ steps.version.outputs.version }}
+        run: bash ./gradlew shadowJar -PreleaseVersion=${{ steps.version.outputs.version }}
 
       - name: Publish GitHub release
         if: steps.version.outputs.already_released != 'true'
