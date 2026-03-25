@@ -1,23 +1,24 @@
 :root {
-    --bg: #11100d;
-    --bg-elevated: #171410;
-    --bg-panel: #1d1813;
-    --bg-soft: #25201a;
-    --bg-hover: #2f2820;
-    --bg-console: #13110e;
-    --border: #342c24;
-    --border-strong: #4a4035;
-    --text: #f6efe4;
-    --text-soft: #ddd1c1;
-    --text-muted: #a99b8a;
-    --accent: #e2a96a;
-    --accent-soft: rgba(226, 169, 106, 0.16);
-    --accent-strong: #fff8ee;
-    --accent-glow: rgba(226, 169, 106, 0.24);
-    --success: #9cc8a5;
-    --warning: #e0bc82;
-    --danger: #e0a091;
-    --shadow: 0 20px 45px rgba(0, 0, 0, 0.24);
+    --bg: #2d2c29;
+    --bg-elevated: #1c1d1a;
+    --bg-panel: #23231f;
+    --bg-soft: #2a2b26;
+    --bg-hover: #353630;
+    --bg-console: #1b1c18;
+    --window-bar: #403f3b;
+    --border: #4a4841;
+    --border-strong: #67625a;
+    --text: #f2efe8;
+    --text-soft: #d8d2c6;
+    --text-muted: #9e988d;
+    --accent: #e58a6a;
+    --accent-soft: rgba(229, 138, 106, 0.16);
+    --accent-strong: #ffd4c3;
+    --accent-glow: rgba(229, 138, 106, 0.28);
+    --success: #6ac95e;
+    --warning: #ffca58;
+    --danger: #ff7769;
+    --shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
     --radius-lg: 16px;
     --radius-md: 12px;
     --radius-sm: 8px;
@@ -36,9 +37,7 @@ html,
 body {
     margin: 0;
     min-height: 100%;
-    background:
-        radial-gradient(circle at top, rgba(226, 169, 106, 0.08), transparent 34%),
-        linear-gradient(180deg, #17130f 0%, var(--bg) 100%);
+    background: var(--bg);
     color: var(--text);
     font-family: var(--mono);
 }
@@ -57,9 +56,9 @@ body.console-page {
 .eyebrow {
     margin: 0 0 0.65rem;
     color: var(--accent);
-    font-size: 0.76rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    font-size: 0.92rem;
+    letter-spacing: 0.03em;
+    text-transform: none;
 }
 
 .hidden {
@@ -71,7 +70,7 @@ body.console-page {
 .mobile-panel-toggle {
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.08)), var(--bg-soft);
+    background: var(--bg-soft);
     color: var(--text);
     font: inherit;
     cursor: pointer;
@@ -81,21 +80,22 @@ body.console-page {
 .primary-button:hover,
 .secondary-button:hover,
 .mobile-panel-toggle:hover {
-    border-color: rgba(226, 169, 106, 0.44);
+    border-color: rgba(229, 138, 106, 0.62);
     background: var(--bg-hover);
-    box-shadow: 0 0 0 1px rgba(226, 169, 106, 0.08);
+    box-shadow: 0 0 0 1px rgba(229, 138, 106, 0.12);
 }
 
 .primary-button {
     padding: 0.9rem 1.2rem;
-    background: linear-gradient(180deg, #3a2a19 0%, #2c2218 100%);
-    color: var(--accent-strong);
-    border-color: rgba(226, 169, 106, 0.3);
+    background: var(--accent);
+    color: #221914;
+    border-color: rgba(229, 138, 106, 0.8);
+    font-weight: 600;
 }
 
 .primary-button:hover {
-    background: linear-gradient(180deg, #44311d 0%, #33261a 100%);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(226, 169, 106, 0.12);
+    background: #ee987a;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(229, 138, 106, 0.12);
 }
 
 .primary-button:active,
@@ -110,11 +110,11 @@ body.console-page {
 }
 
 .console-page {
-    padding: max(1rem, var(--safe-top)) max(1rem, var(--safe-right)) max(1rem, var(--safe-bottom)) max(1rem, var(--safe-left));
+    padding: max(1.5rem, var(--safe-top)) max(1.5rem, var(--safe-right)) max(1.5rem, var(--safe-bottom)) max(1.5rem, var(--safe-left));
 }
 
 .app-shell {
-    width: min(1520px, 100%);
+    width: min(1360px, 100%);
     height: 100%;
     margin: 0 auto;
     position: relative;
@@ -128,7 +128,7 @@ body.console-page {
     height: 100%;
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(0, 0, 0, 0.04)), var(--bg-elevated);
+    background: var(--bg-elevated);
     overflow: hidden;
     box-shadow: var(--shadow);
 }
@@ -138,20 +138,18 @@ body.console-page {
     flex-direction: column;
     min-height: 0;
     min-width: 0;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 28%), var(--bg-elevated);
+    background: transparent;
     overflow: hidden;
 }
 
 .terminal-header {
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: start;
     gap: 1rem;
-    padding: 1rem 1.1rem 0.9rem;
-    border-bottom: 1px solid var(--border);
-    background:
-        linear-gradient(90deg, rgba(226, 169, 106, 0.08), transparent 28%),
-        var(--bg-panel);
+    padding: 1.55rem 1.5rem 1.05rem;
+    border-bottom: 1px dashed rgba(229, 138, 106, 0.72);
+    background: transparent;
 }
 
 .terminal-header > div:first-child {
@@ -162,7 +160,7 @@ body.console-page {
 .auth-copy h1,
 .auth-card h2 {
     margin: 0;
-    font-size: clamp(1.1rem, 1.4vw, 1.4rem);
+    font-size: clamp(1.2rem, 1.6vw, 1.65rem);
     line-height: 1.1;
     font-weight: 500;
 }
@@ -176,23 +174,23 @@ body.console-page {
 .badge {
     display: inline-flex;
     align-items: center;
-    padding: 0.35rem 0.55rem;
+    padding: 0.35rem 0.65rem;
     border-radius: 6px;
     border: 1px solid var(--border);
     color: var(--text-soft);
-    font-size: 0.75rem;
-    background: rgba(255, 255, 255, 0.025);
+    font-size: 0.78rem;
+    background: rgba(255, 255, 255, 0.02);
 }
 
 .badge-live {
-    border-color: rgba(156, 200, 165, 0.32);
-    background: rgba(156, 200, 165, 0.08);
+    border-color: rgba(106, 201, 94, 0.38);
+    background: rgba(106, 201, 94, 0.08);
     color: var(--success);
 }
 
 .badge-muted {
-    border-color: rgba(224, 188, 130, 0.22);
-    background: rgba(224, 188, 130, 0.08);
+    border-color: rgba(229, 138, 106, 0.28);
+    background: rgba(229, 138, 106, 0.08);
     color: var(--warning);
 }
 
@@ -200,10 +198,8 @@ body.console-page {
     flex: 1;
     min-height: 0;
     overflow: auto;
-    padding: 0.35rem 0 0;
-    background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 12%),
-        var(--bg-console);
+    padding: 0.55rem 0 0;
+    background: var(--bg-console);
     overscroll-behavior: contain;
     scrollbar-gutter: stable;
 }
@@ -216,16 +212,16 @@ body.console-page {
 .console-line {
     display: grid;
     grid-template-columns: auto auto 1fr auto;
-    gap: 0.75rem;
+    gap: 0.8rem;
     align-items: start;
-    padding: 0.38rem 1.1rem;
-    border-left: 2px solid transparent;
+    padding: 0.42rem 1.5rem;
+    border-left: 2px dashed transparent;
     color: var(--text-soft);
     animation: fade-in 160ms ease;
 }
 
 .console-line:hover {
-    background: rgba(255, 248, 238, 0.03);
+    background: rgba(255, 255, 255, 0.02);
 }
 
 .console-line-copy {
@@ -245,7 +241,7 @@ body.console-page {
 }
 
 .console-line[data-source="log"] {
-    border-left-color: rgba(255, 255, 255, 0.05);
+    border-left-color: rgba(255, 255, 255, 0.08);
 }
 
 .console-line[data-source="command"] .console-line-level {
@@ -253,8 +249,8 @@ body.console-page {
 }
 
 .console-line[data-source="command"] {
-    border-left-color: rgba(226, 169, 106, 0.5);
-    background: rgba(226, 169, 106, 0.08);
+    border-left-color: rgba(229, 138, 106, 0.82);
+    background: rgba(229, 138, 106, 0.08);
 }
 
 .console-line[data-source="status"] .console-line-level {
@@ -262,15 +258,15 @@ body.console-page {
 }
 
 .console-line[data-source="status"] {
-    border-left-color: rgba(224, 188, 130, 0.34);
-    background: rgba(224, 188, 130, 0.04);
+    border-left-color: rgba(229, 138, 106, 0.45);
+    background: rgba(229, 138, 106, 0.05);
 }
 
 .console-line-timestamp,
 .console-line-level {
     color: var(--text-muted);
     white-space: nowrap;
-    font-size: 0.82rem;
+    font-size: 0.84rem;
 }
 
 .console-line-text {
@@ -284,11 +280,9 @@ body.console-page {
     grid-template-columns: auto minmax(0, 1fr) auto;
     gap: 0.9rem;
     align-items: center;
-    padding: 0.85rem 1.1rem;
+    padding: 1rem 1.5rem;
     border-top: 1px solid var(--border);
-    background:
-        linear-gradient(0deg, rgba(226, 169, 106, 0.04), transparent 45%),
-        var(--bg-panel);
+    background: transparent;
 }
 
 .prompt-shell {
@@ -296,7 +290,7 @@ body.console-page {
     align-items: center;
     gap: 0.4rem;
     color: var(--accent);
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 .prompt-input,
@@ -304,7 +298,7 @@ body.console-page {
     width: 100%;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(0, 0, 0, 0.06)), #171512;
+    background: rgba(255, 255, 255, 0.015);
     color: var(--text);
     font: inherit;
     padding: 0.85rem 0.95rem;
@@ -316,14 +310,14 @@ body.console-page {
 
 .prompt-input:focus,
 .field input:focus {
-    border-color: rgba(226, 169, 106, 0.45);
-    box-shadow: 0 0 0 3px rgba(226, 169, 106, 0.12);
-    background: #191612;
+    border-color: rgba(229, 138, 106, 0.82);
+    box-shadow: 0 0 0 3px rgba(229, 138, 106, 0.12);
+    background: rgba(255, 255, 255, 0.02);
 }
 
 .inline-status {
     margin: 1rem 0 0;
-    padding: 0 1.1rem 1rem;
+    padding: 0 1.5rem 1.2rem;
     color: var(--text-muted);
     font-size: 0.85rem;
 }
@@ -333,39 +327,35 @@ body.console-page {
     flex-direction: column;
     gap: 0;
     position: sticky;
-    top: 1rem;
+    top: 0;
     min-height: 0;
     overflow: auto;
-    background:
-        linear-gradient(180deg, rgba(226, 169, 106, 0.05), transparent 18%),
-        #181612;
-    border-left: 1px solid var(--border);
+    background: transparent;
+    border-left: 1px dashed rgba(229, 138, 106, 0.72);
     overscroll-behavior: contain;
 }
 
 .rail-card,
 .auth-card,
 .auth-copy {
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 50%), var(--bg-elevated);
-    box-shadow: var(--shadow);
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
 }
 
 .rail-card {
-    padding: 1rem;
+    padding: 1.45rem 1.25rem;
     border: 0;
-    border-bottom: 1px solid var(--border);
-    border-radius: 0;
-    background: transparent;
+    border-bottom: 1px dashed rgba(229, 138, 106, 0.72);
 }
 
 .rail-row {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 0.55rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .rail-row:last-child {
@@ -394,7 +384,7 @@ body.console-page {
 
 .console-output::-webkit-scrollbar-thumb,
 .status-rail::-webkit-scrollbar-thumb {
-    background: #312c26;
+    background: #49463f;
     border: 2px solid transparent;
     border-radius: 999px;
     background-clip: padding-box;
@@ -415,7 +405,7 @@ body.console-page {
 .auth-page {
     display: grid;
     place-items: center;
-    padding: 1rem;
+    padding: max(1.5rem, var(--safe-top)) max(1.5rem, var(--safe-right)) max(1.5rem, var(--safe-bottom)) max(1.5rem, var(--safe-left));
 }
 
 .auth-shell {
@@ -427,22 +417,21 @@ body.console-page {
     border-radius: var(--radius-lg);
     overflow: hidden;
     background: var(--bg-elevated);
+    box-shadow: var(--shadow);
 }
 
 .auth-copy,
 .auth-card {
-    padding: 2rem;
+    padding: 2rem 2rem 2.2rem;
 }
 
 .auth-copy {
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: center;
     border: 0;
-    border-right: 1px solid var(--border);
-    background:
-        radial-gradient(circle at top left, rgba(226, 169, 106, 0.1), transparent 36%),
-        var(--bg-panel);
+    border-right: 1px dashed rgba(229, 138, 106, 0.72);
+    background: transparent;
 }
 
 .auth-copy p:last-child {
@@ -455,7 +444,7 @@ body.console-page {
 .auth-note {
     margin-top: 1.5rem;
     padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-top: 1px dashed rgba(229, 138, 106, 0.72);
     color: var(--text-muted);
     font-size: 0.92rem;
     line-height: 1.65;
@@ -463,11 +452,13 @@ body.console-page {
 
 .auth-card {
     border: 0;
-    background: var(--bg-elevated);
+    background: transparent;
 }
 
 .auth-card-header {
     margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed rgba(229, 138, 106, 0.72);
 }
 
 .auth-form {
@@ -479,6 +470,10 @@ body.console-page {
     display: grid;
     gap: 0.55rem;
     color: var(--text-soft);
+}
+
+.field span {
+    color: var(--accent);
 }
 
 .toast-stack {
@@ -495,7 +490,7 @@ body.console-page {
     max-width: 340px;
     border: 1px solid var(--border-strong);
     border-radius: 10px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.08)), #201b16;
+    background: #292824;
     color: var(--text);
     padding: 0.85rem 1rem;
     box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
@@ -580,9 +575,10 @@ body.console-page {
         transform: translateY(calc(100% + 3rem));
         transition: transform 180ms ease;
         min-height: auto;
-        border: 1px solid var(--border);
+        border: 1px dashed rgba(229, 138, 106, 0.72);
         border-bottom: 0;
         border-radius: 18px 18px 0 0;
+        background: var(--bg-elevated);
     }
 
     .app-shell[data-panel-open="true"] .status-rail {
@@ -595,7 +591,7 @@ body.console-page {
 
     .auth-copy {
         border-right: 0;
-        border-bottom: 1px solid var(--border);
+        border-bottom: 1px dashed rgba(229, 138, 106, 0.72);
     }
 }
 
@@ -627,7 +623,7 @@ body.console-page {
 
     .terminal-header {
         align-items: start;
-        padding-top: max(1rem, var(--safe-top));
+        padding-top: 1.1rem;
     }
 
     .terminal-indicators {
