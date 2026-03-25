@@ -17,7 +17,8 @@
 </head>
 <body class="page console-page">
     <div class="app-shell" data-panel-open="false">
-        <button id="panelToggle" class="mobile-panel-toggle" type="button" aria-label="Toggle status panel">Status</button>
+        <button id="panelToggle" class="mobile-panel-toggle" type="button" aria-label="Toggle status panel" aria-controls="statusRail" aria-expanded="false">Status</button>
+        <button id="panelBackdrop" class="panel-backdrop hidden" type="button" aria-label="Close status panel"></button>
 
         <main class="terminal-layout">
             <section class="terminal-panel">
@@ -53,7 +54,7 @@
                 <p id="inlineStatus" class="inline-status">Bootstrapping session…</p>
             </section>
 
-            <aside class="status-rail">
+            <aside id="statusRail" class="status-rail">
                 <section class="rail-card">
                     <p class="eyebrow">Connection</p>
                     <div class="rail-row">

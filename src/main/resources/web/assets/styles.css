@@ -1,23 +1,30 @@
 :root {
-    --bg: #141311;
-    --bg-elevated: #1b1917;
-    --bg-panel: #211f1c;
-    --bg-soft: #282520;
-    --bg-hover: #302c27;
-    --border: #332f29;
-    --border-strong: #464038;
-    --text: #f3efe7;
-    --text-soft: #d5cec2;
-    --text-muted: #9e9689;
-    --accent: #d8b183;
-    --accent-strong: #ffffff;
-    --success: #97c8a0;
-    --warning: #d7b380;
-    --danger: #de978a;
-    --shadow: none;
+    --bg: #11100d;
+    --bg-elevated: #171410;
+    --bg-panel: #1d1813;
+    --bg-soft: #25201a;
+    --bg-hover: #2f2820;
+    --bg-console: #13110e;
+    --border: #342c24;
+    --border-strong: #4a4035;
+    --text: #f6efe4;
+    --text-soft: #ddd1c1;
+    --text-muted: #a99b8a;
+    --accent: #e2a96a;
+    --accent-soft: rgba(226, 169, 106, 0.16);
+    --accent-strong: #fff8ee;
+    --accent-glow: rgba(226, 169, 106, 0.24);
+    --success: #9cc8a5;
+    --warning: #e0bc82;
+    --danger: #e0a091;
+    --shadow: 0 20px 45px rgba(0, 0, 0, 0.24);
     --radius-lg: 16px;
     --radius-md: 12px;
     --radius-sm: 8px;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
     --mono: ui-monospace, "Cascadia Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
@@ -29,17 +36,21 @@ html,
 body {
     margin: 0;
     min-height: 100%;
-    background: var(--bg);
+    background:
+        radial-gradient(circle at top, rgba(226, 169, 106, 0.08), transparent 34%),
+        linear-gradient(180deg, #17130f 0%, var(--bg) 100%);
     color: var(--text);
     font-family: var(--mono);
 }
 
 .page {
     min-height: 100vh;
+    min-height: 100dvh;
 }
 
 body.console-page {
     height: 100vh;
+    height: 100dvh;
     overflow: hidden;
 }
 
@@ -60,24 +71,37 @@ body.console-page {
 .mobile-panel-toggle {
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    background: var(--bg-soft);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.08)), var(--bg-soft);
     color: var(--text);
     font: inherit;
     cursor: pointer;
-    transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
+    transition: border-color 140ms ease, background 140ms ease, color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
 }
 
 .primary-button:hover,
 .secondary-button:hover,
 .mobile-panel-toggle:hover {
-    border-color: rgba(216, 177, 131, 0.34);
+    border-color: rgba(226, 169, 106, 0.44);
     background: var(--bg-hover);
+    box-shadow: 0 0 0 1px rgba(226, 169, 106, 0.08);
 }
 
 .primary-button {
     padding: 0.9rem 1.2rem;
-    background: #2b2620;
+    background: linear-gradient(180deg, #3a2a19 0%, #2c2218 100%);
     color: var(--accent-strong);
+    border-color: rgba(226, 169, 106, 0.3);
+}
+
+.primary-button:hover {
+    background: linear-gradient(180deg, #44311d 0%, #33261a 100%);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(226, 169, 106, 0.12);
+}
+
+.primary-button:active,
+.secondary-button:active,
+.mobile-panel-toggle:active {
+    transform: translateY(1px);
 }
 
 .secondary-button,
@@ -86,13 +110,14 @@ body.console-page {
 }
 
 .console-page {
-    padding: 1rem;
+    padding: max(1rem, var(--safe-top)) max(1rem, var(--safe-right)) max(1rem, var(--safe-bottom)) max(1rem, var(--safe-left));
 }
 
 .app-shell {
     width: min(1520px, 100%);
     height: 100%;
     margin: 0 auto;
+    position: relative;
 }
 
 .terminal-layout {
@@ -103,8 +128,9 @@ body.console-page {
     height: 100%;
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    background: var(--bg-elevated);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(0, 0, 0, 0.04)), var(--bg-elevated);
     overflow: hidden;
+    box-shadow: var(--shadow);
 }
 
 .terminal-panel {
@@ -112,7 +138,7 @@ body.console-page {
     flex-direction: column;
     min-height: 0;
     min-width: 0;
-    background: var(--bg-elevated);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 28%), var(--bg-elevated);
     overflow: hidden;
 }
 
@@ -123,7 +149,13 @@ body.console-page {
     gap: 1rem;
     padding: 1rem 1.1rem 0.9rem;
     border-bottom: 1px solid var(--border);
-    background: var(--bg-panel);
+    background:
+        linear-gradient(90deg, rgba(226, 169, 106, 0.08), transparent 28%),
+        var(--bg-panel);
+}
+
+.terminal-header > div:first-child {
+    min-width: 0;
 }
 
 .terminal-header h1,
@@ -149,15 +181,18 @@ body.console-page {
     border: 1px solid var(--border);
     color: var(--text-soft);
     font-size: 0.75rem;
-    background: var(--bg-soft);
+    background: rgba(255, 255, 255, 0.025);
 }
 
 .badge-live {
-    border-color: rgba(151, 200, 160, 0.28);
+    border-color: rgba(156, 200, 165, 0.32);
+    background: rgba(156, 200, 165, 0.08);
     color: var(--success);
 }
 
 .badge-muted {
+    border-color: rgba(224, 188, 130, 0.22);
+    background: rgba(224, 188, 130, 0.08);
     color: var(--warning);
 }
 
@@ -166,7 +201,9 @@ body.console-page {
     min-height: 0;
     overflow: auto;
     padding: 0.35rem 0 0;
-    background: #151412;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 12%),
+        var(--bg-console);
     overscroll-behavior: contain;
     scrollbar-gutter: stable;
 }
@@ -188,12 +225,13 @@ body.console-page {
 }
 
 .console-line:hover {
-    background: rgba(255, 255, 255, 0.025);
+    background: rgba(255, 248, 238, 0.03);
 }
 
 .console-line-copy {
     opacity: 0;
     padding: 0;
+    min-width: 2.5rem;
     background: transparent;
     border: 0;
     color: var(--text-muted);
@@ -207,7 +245,7 @@ body.console-page {
 }
 
 .console-line[data-source="log"] {
-    border-left-color: rgba(255, 255, 255, 0.045);
+    border-left-color: rgba(255, 255, 255, 0.05);
 }
 
 .console-line[data-source="command"] .console-line-level {
@@ -215,8 +253,8 @@ body.console-page {
 }
 
 .console-line[data-source="command"] {
-    border-left-color: rgba(216, 177, 131, 0.38);
-    background: rgba(216, 177, 131, 0.05);
+    border-left-color: rgba(226, 169, 106, 0.5);
+    background: rgba(226, 169, 106, 0.08);
 }
 
 .console-line[data-source="status"] .console-line-level {
@@ -224,7 +262,8 @@ body.console-page {
 }
 
 .console-line[data-source="status"] {
-    border-left-color: rgba(215, 179, 128, 0.28);
+    border-left-color: rgba(224, 188, 130, 0.34);
+    background: rgba(224, 188, 130, 0.04);
 }
 
 .console-line-timestamp,
@@ -247,7 +286,9 @@ body.console-page {
     align-items: center;
     padding: 0.85rem 1.1rem;
     border-top: 1px solid var(--border);
-    background: var(--bg-panel);
+    background:
+        linear-gradient(0deg, rgba(226, 169, 106, 0.04), transparent 45%),
+        var(--bg-panel);
 }
 
 .prompt-shell {
@@ -263,21 +304,25 @@ body.console-page {
     width: 100%;
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
-    background: #171513;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(0, 0, 0, 0.06)), #171512;
     color: var(--text);
     font: inherit;
     padding: 0.85rem 0.95rem;
     resize: none;
     outline: none;
+    font-size: 16px;
+    transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
 }
 
 .prompt-input:focus,
 .field input:focus {
-    border-color: rgba(216, 177, 131, 0.4);
+    border-color: rgba(226, 169, 106, 0.45);
+    box-shadow: 0 0 0 3px rgba(226, 169, 106, 0.12);
+    background: #191612;
 }
 
 .inline-status {
-    margin: 0;
+    margin: 1rem 0 0;
     padding: 0 1.1rem 1rem;
     color: var(--text-muted);
     font-size: 0.85rem;
@@ -291,7 +336,9 @@ body.console-page {
     top: 1rem;
     min-height: 0;
     overflow: auto;
-    background: #181715;
+    background:
+        linear-gradient(180deg, rgba(226, 169, 106, 0.05), transparent 18%),
+        #181612;
     border-left: 1px solid var(--border);
     overscroll-behavior: contain;
 }
@@ -301,7 +348,7 @@ body.console-page {
 .auth-copy {
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
-    background: var(--bg-elevated);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 50%), var(--bg-elevated);
     box-shadow: var(--shadow);
 }
 
@@ -337,6 +384,7 @@ body.console-page {
 .rail-actions {
     display: grid;
     gap: 0.55rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .console-output::-webkit-scrollbar,
@@ -392,7 +440,9 @@ body.console-page {
     justify-content: end;
     border: 0;
     border-right: 1px solid var(--border);
-    background: var(--bg-panel);
+    background:
+        radial-gradient(circle at top left, rgba(226, 169, 106, 0.1), transparent 36%),
+        var(--bg-panel);
 }
 
 .auth-copy p:last-child {
@@ -400,6 +450,15 @@ body.console-page {
     color: var(--text-soft);
     line-height: 1.7;
     max-width: 38ch;
+}
+
+.auth-note {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    color: var(--text-muted);
+    font-size: 0.92rem;
+    line-height: 1.65;
 }
 
 .auth-card {
@@ -436,9 +495,10 @@ body.console-page {
     max-width: 340px;
     border: 1px solid var(--border-strong);
     border-radius: 10px;
-    background: #202020;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.08)), #201b16;
     color: var(--text);
     padding: 0.85rem 1rem;
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
 }
 
 .toast[data-tone="error"] {
@@ -449,6 +509,10 @@ body.console-page {
 .mobile-panel-toggle {
     display: none;
     margin: 0 0 1rem auto;
+}
+
+.panel-backdrop {
+    display: none;
 }
 
 @keyframes fade-in {
@@ -463,6 +527,14 @@ body.console-page {
 }
 
 @media (max-width: 1040px) {
+    .console-page {
+        padding: 0;
+    }
+
+    .app-shell {
+        width: 100%;
+    }
+
     .terminal-layout,
     .auth-shell {
         grid-template-columns: 1fr;
@@ -470,18 +542,47 @@ body.console-page {
 
     .mobile-panel-toggle {
         display: inline-flex;
+        position: fixed;
+        right: calc(1rem + var(--safe-right));
+        top: calc(1rem + var(--safe-top));
+        bottom: auto;
+        margin: 0;
+        z-index: 12;
+        min-height: 2.9rem;
+        align-items: center;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.28);
+    }
+
+    .panel-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 8;
+        border: 0;
+        padding: 0;
+        background: rgba(10, 10, 10, 0.5);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 180ms ease;
+    }
+
+    .app-shell[data-panel-open="true"] .panel-backdrop {
+        opacity: 1;
+        pointer-events: auto;
     }
 
     .status-rail {
         position: fixed;
-        inset: auto 1rem 1rem 1rem;
+        inset: auto 0 0 0;
         z-index: 9;
-        max-height: min(70vh, 36rem);
-        transform: translateY(calc(100% + 2rem));
+        max-height: min(76dvh, 40rem);
+        padding-bottom: max(0.5rem, var(--safe-bottom));
+        transform: translateY(calc(100% + 3rem));
         transition: transform 180ms ease;
         min-height: auto;
         border: 1px solid var(--border);
-        border-radius: var(--radius-md);
+        border-bottom: 0;
+        border-radius: 18px 18px 0 0;
     }
 
     .app-shell[data-panel-open="true"] .status-rail {
@@ -501,35 +602,141 @@ body.console-page {
 @media (max-width: 720px) {
     .console-page,
     .auth-page {
-        padding: 1rem;
+        padding: 0;
     }
 
     body.console-page {
         overflow: hidden;
     }
 
+    .terminal-layout,
+    .auth-shell {
+        min-height: 100dvh;
+        border: 0;
+        border-radius: 0;
+    }
+
     .terminal-header,
     .prompt-bar,
+    .inline-status,
     .auth-copy,
     .auth-card {
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-left: max(1rem, var(--safe-left));
+        padding-right: max(1rem, var(--safe-right));
+    }
+
+    .terminal-header {
+        align-items: start;
+        padding-top: max(1rem, var(--safe-top));
+    }
+
+    .terminal-indicators {
+        width: 100%;
+    }
+
+    .badge {
+        min-height: 2rem;
+        align-items: center;
     }
 
     .prompt-bar {
         grid-template-columns: 1fr;
+        gap: 0.75rem;
+        align-items: stretch;
+        padding-bottom: calc(0.9rem + var(--safe-bottom));
     }
 
     .console-line {
-        grid-template-columns: auto 1fr auto;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+            "meta copy"
+            "text text";
+        gap: 0.35rem 0.75rem;
     }
 
     .console-line-level {
         display: none;
     }
 
+    .console-line-timestamp {
+        grid-area: meta;
+        font-size: 0.74rem;
+    }
+
+    .console-line-text {
+        grid-area: text;
+        white-space: pre-wrap;
+        word-break: break-word;
+    }
+
+    .console-line-copy {
+        grid-area: copy;
+        opacity: 1;
+        align-self: start;
+    }
+
     .console-line {
         padding-left: 1rem;
         padding-right: 1rem;
+        padding-top: 0.55rem;
+        padding-bottom: 0.55rem;
+    }
+
+    .prompt-shell {
+        display: none;
+    }
+
+    .primary-button,
+    .secondary-button {
+        min-height: 2.9rem;
+    }
+
+    .rail-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .rail-row {
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .rail-value {
+        text-align: left;
+        overflow-wrap: anywhere;
+    }
+
+    .auth-page {
+        place-items: stretch;
+    }
+
+    .auth-copy,
+    .auth-card {
+        padding-top: 1.4rem;
+        padding-bottom: 1.4rem;
+    }
+
+    .auth-copy {
+        justify-content: start;
+    }
+
+    .toast-stack {
+        left: max(1rem, var(--safe-left));
+        right: max(1rem, var(--safe-right));
+        bottom: calc(1rem + var(--safe-bottom));
+    }
+
+    .toast {
+        min-width: 0;
+        max-width: none;
+    }
+}
+
+@media (hover: none) {
+    .console-line-copy {
+        opacity: 1;
+    }
+
+    .console-line:hover {
+        background: transparent;
     }
 }

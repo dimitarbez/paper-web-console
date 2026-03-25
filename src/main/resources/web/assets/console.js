@@ -16,6 +16,7 @@ const clearButton = document.getElementById("clearButton");
 const wrapButton = document.getElementById("wrapButton");
 const logoutButton = document.getElementById("logoutButton");
 const panelToggle = document.getElementById("panelToggle");
+const panelBackdrop = document.getElementById("panelBackdrop");
 
 let socket = null;
 let reconnectTimer = null;
@@ -53,6 +54,22 @@ function hydrateStatus(status) {
     serverValue.textContent = `${status.serverName} ${status.minecraftVersion}`;
     sessionValue.textContent = formatRelativeTime(status.sessionExpiresAtEpochMillis);
     bufferValue.textContent = `${status.ui.maxBufferedLines} lines`;
+}
+
+function isCompactLayout() {
+    return window.matchMedia("(max-width: 1040px)").matches;
+}
+
+function setPanelOpen(isOpen) {
+    appShell.dataset.panelOpen = String(isOpen);
+    panelToggle.setAttribute("aria-expanded", String(isOpen));
+    panelBackdrop.classList.toggle("hidden", !isOpen);
+}
+
+function closePanel() {
+    if (isCompactLayout()) {
+        setPanelOpen(false);
+    }
 }
 
 function connectSocket() {
@@ -231,16 +248,19 @@ reconnectButton.addEventListener("click", () => {
         socket.close();
     }
     inlineStatus.textContent = "Reconnecting…";
+    closePanel();
     connectSocket();
 });
 
 clearButton.addEventListener("click", () => {
     output.replaceChildren();
     inlineStatus.textContent = "Local console view cleared.";
+    closePanel();
 });
 
 wrapButton.addEventListener("click", () => {
     output.classList.toggle("wrap-enabled");
+    closePanel();
 });
 
 logoutButton.addEventListener("click", async () => {
@@ -255,5 +275,25 @@ logoutButton.addEventListener("click", async () => {
 
 panelToggle.addEventListener("click", () => {
     const isOpen = appShell.dataset.panelOpen === "true";
-    appShell.dataset.panelOpen = String(!isOpen);
+    setPanelOpen(!isOpen);
+});
+
+panelBackdrop.addEventListener("click", () => {
+    closePanel();
+});
+
+output.addEventListener("pointerdown", () => {
+    closePanel();
+});
+
+window.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+        closePanel();
+    }
+});
+
+window.addEventListener("resize", () => {
+    if (!isCompactLayout()) {
+        setPanelOpen(false);
+    }
 });

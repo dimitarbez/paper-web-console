@@ -94,6 +94,20 @@ export PATH="$JAVA_HOME/bin:$PATH"
 ./gradlew shadowJar
 ```
 
+On Linux, if `java -version` works but Gradle still cannot find the toolchain, resolve the real JDK path and export that exact directory:
+
+```bash
+readlink -f "$(which java)"
+# example output: /usr/lib/jvm/java-21-openjdk-amd64/bin/java
+
+export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+export PATH="$JAVA_HOME/bin:$PATH"
+./gradlew test
+./gradlew shadowJar
+```
+
+This repository also tells Gradle to look at `JAVA_HOME` explicitly through `gradle.properties`, so once `JAVA_HOME` points at a Java 21 JDK, the wrapper should use it.
+
 ## Install On A Paper Server
 
 1. Build the shaded jar.
