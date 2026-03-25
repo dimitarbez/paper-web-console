@@ -61,6 +61,21 @@ body.console-page {
     text-transform: none;
 }
 
+.brand-lockup {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    min-width: 0;
+}
+
+.brand-mark {
+    width: 2.25rem;
+    height: 2.25rem;
+    flex: 0 0 auto;
+    border-radius: 0.7rem;
+    box-shadow: 0 0 0 1px rgba(229, 138, 106, 0.16);
+}
+
 .hidden {
     display: none !important;
 }
@@ -154,6 +169,14 @@ body.console-page {
 
 .terminal-header > div:first-child {
     min-width: 0;
+}
+
+.terminal-header .brand-lockup .eyebrow {
+    margin-bottom: 0.35rem;
+}
+
+.terminal-header .brand-lockup h1 {
+    white-space: nowrap;
 }
 
 .terminal-header h1,
@@ -434,6 +457,14 @@ body.console-page {
     background: transparent;
 }
 
+.auth-copy .brand-lockup {
+    margin-bottom: 0.8rem;
+}
+
+.auth-copy .brand-lockup .eyebrow {
+    margin: 0;
+}
+
 .auth-copy p:last-child {
     margin-bottom: 0;
     color: var(--text-soft);
@@ -595,6 +626,17 @@ body.console-page {
     }
 }
 
+@media (min-width: 721px) and (max-width: 1040px) {
+    .terminal-header {
+        padding-right: calc(7.25rem + var(--safe-right));
+    }
+
+    .terminal-indicators {
+        max-width: calc(100% - 7.25rem);
+        padding-right: 0.35rem;
+    }
+}
+
 @media (max-width: 720px) {
     .console-page,
     .auth-page {
@@ -622,17 +664,42 @@ body.console-page {
     }
 
     .terminal-header {
-        align-items: start;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
         padding-top: 1.1rem;
+    }
+
+    .brand-lockup {
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .brand-lockup > div {
+        min-width: 0;
+    }
+
+    .terminal-header .brand-lockup h1 {
+        white-space: normal;
     }
 
     .terminal-indicators {
         width: 100%;
+        justify-content: flex-start;
+        padding-right: 0.25rem;
+        max-width: none;
+    }
+
+    .brand-mark {
+        width: 2rem;
+        height: 2rem;
     }
 
     .badge {
         min-height: 2rem;
         align-items: center;
+        max-width: 100%;
+        overflow-wrap: anywhere;
     }
 
     .prompt-bar {

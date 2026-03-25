@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "dev.dimo"
-version = "0.1.0"
+version = providers.gradleProperty("releaseVersion").orElse("0.1.0").get()
 
 repositories {
     mavenCentral()
@@ -45,6 +45,7 @@ tasks.test {
 }
 
 tasks.shadowJar {
+    archiveBaseName.set("paper-web-console")
     archiveClassifier.set("")
 }
 

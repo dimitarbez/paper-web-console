@@ -1,0 +1,75 @@
+name: release
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: Determine release version
+        id: version
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          semver_regex='^v?[0-9]+\.[0-9]+\.[0-9]+$'
+          head_tag="$(git tag --points-at HEAD | grep -E "$semver_regex" | head -n 1 || true)"
+
+          if [[ -n "$head_tag" ]]; then
+            clean_version="${head_tag#v}"
+            echo "already_released=true" >> "$GITHUB_OUTPUT"
+            echo "tag=$head_tag" >> "$GITHUB_OUTPUT"
+            echo "version=$clean_version" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          latest_version="$({ git tag --list | grep -E "$semver_regex" | sed 's/^v//' | sort -V | tail -n 1; } || true)"
+
+          if [[ -z "$latest_version" ]]; then
+            latest_version="0.1.0"
+          fi
+
+          IFS='.' read -r major minor patch <<< "$latest_version"
+          next_minor=$((minor + 1))
+          next_version="${major}.${next_minor}.0"
+
+          echo "already_released=false" >> "$GITHUB_OUTPUT"
+          echo "tag=v$next_version" >> "$GITHUB_OUTPUT"
+          echo "version=$next_version" >> "$GITHUB_OUTPUT"
+
+      - name: Build shaded jar
+        if: steps.version.outputs.already_released != 'true'
+        run: ./gradlew shadowJar -PreleaseVersion=${{ steps.version.outputs.version }}
+
+      - name: Publish GitHub release
+        if: steps.version.outputs.already_released != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ steps.version.outputs.tag }}" \
+            "build/libs/paper-web-console-${{ steps.version.outputs.version }}.jar" \
+            --title "Paper Web Console ${{ steps.version.outputs.version }}" \
+            --generate-notes

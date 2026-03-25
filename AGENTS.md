@@ -25,6 +25,7 @@ If you add features, keep that product shape intact unless the user explicitly a
 
 - Use Java 21 for compile and test work. The project is configured with `options.release = 21`.
 - Prefer `./gradlew test` and `./gradlew shadowJar` when the wrapper is available.
+- Automated GitHub releases are handled by `.github/workflows/release.yml`, which builds the shaded jar with `-PreleaseVersion=<version>` so the artifact name matches the release tag.
 - If the Gradle wrapper jar is missing in this workspace, use a modern local Gradle release and regenerate the wrapper before changing build logic.
 - Do not introduce a Node, npm, Vite, React, or Tailwind toolchain unless the user explicitly requests a frontend stack change.
 - Keep runtime dependencies shaded into the plugin jar through the Shadow plugin.

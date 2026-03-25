@@ -65,6 +65,27 @@ build/libs/paper-web-console-<version>.jar
 
 This project uses the Shadow plugin and produces a single plugin jar with runtime dependencies bundled inside it.
 
+## Release Automation
+
+Pushes to `main` now create a GitHub release automatically through [.github/workflows/release.yml](.github/workflows/release.yml).
+
+The workflow behavior is:
+
+- it runs on every push to `main`
+- it finds the latest semantic version tag in the repository
+- it bumps the minor version and resets patch to `0`
+- it builds `build/libs/paper-web-console-<version>.jar`
+- it publishes a GitHub release with generated notes and uploads that jar
+
+Examples:
+
+- if the latest semver tag is `v0.1.0`, the next push to `main` releases `v0.2.0`
+- if the latest semver tag is `v0.2.0`, the next push to `main` releases `v0.3.0`
+
+The current non-semver tag `release` is ignored by the workflow, so the next automated release will start from `0.2.0` unless you create a semantic version tag first.
+
+If you rerun the workflow for a commit that already has a semver tag, it will detect that and skip creating a second release.
+
 ### If the Gradle wrapper is incomplete
 
 Some checkouts may be missing `gradle-wrapper.jar`. If that happens, use a modern local Gradle installation and regenerate the wrapper or build directly with that Gradle version.
